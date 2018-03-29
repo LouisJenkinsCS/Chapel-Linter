@@ -47,7 +47,7 @@ export default {
         console.log(file);
         console.log(text);
 
-        return helpers.exec(executablePath, [file]).catch((output) => {
+        return helpers.exec(executablePath, [file, "--no-codegen", "--baseline", "--devel"]).catch((output) => {
           console.log("Output: " + ("" + output).substring(7))
           if (editor.getText() !== text) {
             // Editor contents changed, tell Linter not to update
