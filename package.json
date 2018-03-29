@@ -1,80 +1,143 @@
 {
-  "name": "linter-golinter",
-  "main": "lib/main.js",
+
+  "name": "linter-chapel",
+
+  "main": "index.js",
+
   "version": "1.2.2",
-  "description": "Check Go files with golint tool",
+
+  "description": "Check chpl files with linter",
+
   "keywords": [
-    "go",
-    "golang",
+
+    "chapel",
+
+    "chapel-linter",
+
     "linter"
+
   ],
+
   "configSchema": {
+
     "executablePath": {
-      "title": "golint Executable Path",
-      "description": "The path to `golint` executable",
+
+      "title": "Chapel Executable Path",
+
+      "description": "The path to `chpl` executable",
+
       "type": "string",
-      "default": "golint"
+
+      "default": "chpl"
+
     },
+
     "extraOptions": {
+
       "title": "Extra Options",
-      "description": "Options for `golint` command",
+
+      "description": "Options for `chpl` command",
+
       "type": "string",
+
       "default": "-min_confidence=0.8"
+
     }
+
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/AtomLinter/linter-golinter.git"
-  },
-  "bugs": {
-    "url": "https://github.com/AtomLinter/linter-golinter/issues"
-  },
-  "homepage": "https://github.com/AtomLinter/linter-golinter",
+
   "license": "MIT",
+
   "engines": {
+
     "atom": ">=1.4.0 <2.0.0"
+
   },
+
   "scripts": {
+
     "lint": "eslint .",
+
     "test": "apm test"
+
   },
+
   "dependencies": {
+
     "atom-linter": "^10.0.0",
+
     "atom-package-deps": "^4.0.1"
+
   },
+
   "devDependencies": {
+
     "eslint": "^4.6.0",
+
     "eslint-config-airbnb-base": "^12.0.0",
+
     "eslint-plugin-import": "^2.7.0"
+
   },
+
   "eslintConfig": {
+
     "extends": "airbnb-base",
+
     "rules": {
+
       "global-require": "off",
+
       "import/no-unresolved": [
+
         "error",
+
         {
+
           "ignore": [
+
             "atom"
+
           ]
+
         }
+
       ]
+
     },
+
     "globals": {
+
       "atom": true
+
     },
+
     "env": {
+
       "node": true
+
     }
+
   },
+
   "package-deps": [
+
     "linter"
+
   ],
+
   "providedServices": {
+
     "linter": {
+
       "versions": {
+
         "1.0.0": "provideLinter"
+
       }
+
     }
+
   }
+
 }
