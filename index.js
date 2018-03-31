@@ -51,7 +51,11 @@ export default {
         options = {};
         options.timeout = Infinity;
         options.ignoreExitCode = true;
-        return await helpers.exec(executablePath, [file, "--no-codegen", "--baseline", "--ignore-user-errors", "--devel"], options).catch((output) => {
+        var flags = [
+          file, "--no-codegen", "--baseline", "--ignore-user-errors",
+          "--devel", "--stop-after-pass=\"checkResolved\""
+        ];
+        return await helpers.exec(executablePath, flags, options).catch((output) => {
           console.log("Output: " + ("" + output).substring(7))
           if (editor.getText() !== text) {
             // Editor contents changed, tell Linter not to update
