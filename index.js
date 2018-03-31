@@ -35,8 +35,9 @@ export default {
       scope: 'file',
       lintOnFly: false,
       lintsOnChange: false,
+      timeout: 3000,
       name: 'ChapelLinter',
-      lint(editor) {
+      async lint(editor) {
         console.log("Asked to lint...");
         if (!helpers) {
           helpers = require('atom-linter');
@@ -47,7 +48,10 @@ export default {
         console.log(file);
         console.log(text);
 
-        return helpers.exec(executablePath, [file, "--no-codegen", "--baseline", "--devel"]).catch((output) => {
+        options = {};
+        options.timeout = Infinity;
+        options.ignoreExitCode = true;
+        return await helpers.exec(executablePath, [file, "--no-codegen", "--baseline", "--ignore-user-errors", "--devel"], options).catch((output) => {
           console.log("Output: " + ("" + output).substring(7))
           if (editor.getText() !== text) {
             // Editor contents changed, tell Linter not to update
@@ -57,8 +61,8 @@ export default {
           const errors = helpers.parse(("" + output).substring(7), regex).map((parsed) => {
             console.log(parsed);
             const message = Object.assign({}, parsed);
-            const line = message.range[0][0] - 1;
-            message.rnge = helpers.generateRange(editor, line, 0);
+            const line = message.range[0][0];
+            message.range = helpers.generateRange(editor, line, -1);
             return message;
           });
 
